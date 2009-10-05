@@ -1,0 +1,15 @@
+This repository contains the following scripts:
+
+update_trap.pl - script to download gene trap sequence tags (traps) from the NCBI dbGSS and import them into the UniTrap db
+update_trap_from_file.pl - script to import traps into the UniTrap database specifying a local file downloaded from the NCBI dbGSS
+trap_mapper.pl - script to map the traps to the mouse genome
+trap_annotator.pl - script to annotate the mapped loci using the Ensembl database as source of annotation
+build_unitrap.pl - script to indetify the right trapped genes, identify the vector insertions, and create UniTraps
+get_xref.pl - script to get xref from each trapped gene
+insert_go.pl - script to get GO terms for each trapped gene
+insert_hs_ort.pl - script to get the human ortholog of each trapped gene
+insert_omim.pl - script to get the OMIM annotation for each human ortholog of trapped genes
+mutated_gene.pl - script to fill the table of all the genes mutated through gene trapping experiments and available in the UniTrap database (htttp://unitrap.cbm.fvg.it)
+add_new_to_mutated_gene.pl - script to add new mutated genes to the UniTrap database
+remap.pl - script to analyze the trapped gene region using remap. This aim of this analysis is to provide a restriction map to verify the mutagenesis in ES cells
+unitrap_conf.pl - UniTrap configuration file
