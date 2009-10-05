@@ -26,7 +26,7 @@ use Bio::Tools::RepeatMasker;
 
 use Bio::Unitrap::Db;
 
-my $USAGE = "update_trap.pl [-c check] [-mindate] [-h help]";
+my $USAGE = "update_trap.pl [-c check] [-mindate] [-h help] [-o output]";
 my ($check, $mindate, $help);
 
 &GetOptions(    	'check|c'			        => \$check,
@@ -288,6 +288,4 @@ while (my $rhref_projects = $sth_projects->fetchrow_hashref) {
 
 ###################
 #   subroutines   #
-###################
-
-# Execute a query to 
+##############
