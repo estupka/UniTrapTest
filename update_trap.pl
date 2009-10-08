@@ -49,7 +49,7 @@ use Bio::Unitrap::Db;
 
 
 my $USAGE = "update_trap.pl [-c check] [-mindate] [-h help] [-o output]";
-my ($check, $mindate, $help);
+my ($check, $mindate, $help,$output);
 
 &GetOptions(    	'check|c'			        => \$check,
 			                    'mindate|m=s'    => \$mindate,
@@ -101,7 +101,7 @@ my $trappass = $conf{'trappass'};
 =cut
 
 if (!$output) {
-	print OUT "The output will be write into the default directory $ENV{'HOME'}/tmp/unitrap/.\n" id $debug;
+	print OUT "The output will be write into the default directory $ENV{'HOME'}/tmp/unitrap/.\n" if $debug;
 }
 
 my $fileout = "$ENV{'HOME'}/tmp/unitrap/";
@@ -117,7 +117,7 @@ $debug && print OUT "Trying to download new traps from gss db\n";
 
 =cut
 
-my $unitrapdb_obj = Bio::Unitrap::Db;
+my $unitrapdb_obj = Bio::Unitrap::Db->new;
 #$unitrapdb_obj->exec_dump($conf{'mysql_path'}, $conf{'trapuser'}, $conf{'trappass'}, $conf{'trapdbname'}, $conf{'traphost'}, $conf{'tmp_dir'}.$conf{'trapdbname'}."_"."$mday"."_"."$mon"."_"."$year".".sql", "0", $debug);
 
 =pod
@@ -131,7 +131,7 @@ my $unitrapdb_obj = Bio::Unitrap::Db;
 =cut
 
 my $trap_db = DBI->connect("DBI:mysql:database=$trapdbname;host=$traphost;port=3306", $trapuser, $trappass) || die "Can't connect to $trapdbname: $DBI::errstr";
-my $sql_projects qq{select project_id, project_name, wordkey from project where project_name != 'tigem' order by project_id};
+my $sql_projects = qq{select project_id, project_name, wordkey from project where project_name != 'tigem' order by project_id};
 my $sth_projects = $trap_db->prepare($sql_projects) || die "Can't prepare $sql_projects: $DBI::errstr";
 $debug && print OUT "SQL CODE: $sql_projects\n";
 
@@ -239,7 +239,7 @@ while (my $rhref_projects = $sth_projects->fetchrow_hashref) {
 		my $sth_check;
 		
 		if ($check == 1) {
-			my $sql_check qq{select distinct trap_id from trap where trap_name = ?};
+			my $sql_check = qq{select distinct trap_id from trap where trap_name = ?};
 			$debug && print OUT "SQL CODE: $sql_check\n";
 			$sth_check = $trap_db->prepare($sql_check);
 			$exists = $sth_check->execute($trap_name) || die "select failed : $DBI::errstr";
